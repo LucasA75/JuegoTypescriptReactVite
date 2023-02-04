@@ -13,52 +13,52 @@ export default class Preloader extends Phaser.Scene {
         /* Cargaremos el background */
         this.load.image(
             TextureKeys.Background /* Aqui se ocupa un enums */
-            , '/src/assets/bg_repeat_340x640.png')
+            , 'assets/bg_repeat_340x640.png')
 
         /* cargaremos un atlas -> se ocupa para llamar a un JSON para cargar las imagenes */
         this.load.atlas(
             /* un sprite atlas o sprite sheet es una imagen que contiene muchas imagenes pequeñas */
             TextureKeys.RocketMouse,
-            'src/assets/rocket-mouse.png',
-            'src/assets/rocket-mouse.json'
+            'assets/rocket-mouse.png',
+            'assets/rocket-mouse.json'
         )
 
         /* Cargaremos decoracion */
         this.load.image(
             TextureKeys.MouseHole,
-            'src/assets/object_mousehole.png'
+            'assets/object_mousehole.png'
         )
 
         this.load.image(
             TextureKeys.Window1,
-            'src/assets/object_window1.png'
+            'assets/object_window1.png'
         )
         this.load.image(
             TextureKeys.Window2,
-            'src/assets/object_window2.png'
+            'assets/object_window2.png'
         )
         //Cargaremos los libreros
         this.load.image(
             TextureKeys.Bookcase1,
-            'src/assets/object_bookcase1.png'
+            'assets/object_bookcase1.png'
         )
 
         this.load.image(
             TextureKeys.Bookcase2,
-            'src/assets/object_bookcase2.png'
+            'assets/object_bookcase2.png'
         )
 
         this.load.image(
             TextureKeys.LaserEnd,
-            'src/assets/object_laser_end.png'
+            'assets/object_laser_end.png'
         )
         this.load.image(
             TextureKeys.LaserMiddle,
-            'src/assets/object_laser.png'
+            'assets/object_laser.png'
         )
         this.load.image(
             TextureKeys.Coin,
-            'src/assets/object_coin.png'
+            'assets/object_coin.png'
         )
 
     }
