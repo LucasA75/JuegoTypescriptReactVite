@@ -3,6 +3,7 @@ import SceneKeys from "../consts/SceneKeys";
 import TextureKeys from "../consts/TextureKeys";
 import RocketMouse from "../game/RocketMouse";
 import LaserObstacle from "../game/LaserObstacle"; 
+import SoundKeys from "../consts/SoundKeys";
 
 export default class Game extends Phaser.Scene{
 
@@ -118,6 +119,8 @@ export default class Game extends Phaser.Scene{
         //seteamos la velocidad -> como es un infinite runner el valor no lo maneja el usuario
         body.setVelocityX(200)
 
+        
+
         this.physics.world.setBounds(
             0,0, //x,y
             Number.MAX_SAFE_INTEGER,height -55 //ancho y largo
@@ -142,7 +145,7 @@ export default class Game extends Phaser.Scene{
         )
 
         //creamos el label del collection coins
-        this.scoreLabel = this.add.text(10,10,`Puntuacion: ${this.score}`,{
+        this.scoreLabel = this.add.text(10,10,`Monedas: ${this.score}`,{
             fontSize:"24px",
             color:"#080808",
             backgroundColor:"#F8E71C",
@@ -186,11 +189,14 @@ export default class Game extends Phaser.Scene{
         //apagar las fisicas del body
         coin.body.enable = false
 
+        //agregamos el sonido
+        this.sound.play(SoundKeys.CoinSound)
+
         //incrementamos en 1
         this.score += 1
 
         //actualizamos el texto
-        this.scoreLabel.text = `Puntuacion: ${this.score}`
+        this.scoreLabel.text = `Monedas: ${this.score}`
     }
 
     private wrapMouseHole() {

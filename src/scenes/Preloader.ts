@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import TextureKeys from "../consts/TextureKeys";
 import SceneKeys from "../consts/SceneKeys";
 import AnimationKeys from "../consts/AnimationKeys";
+import SoundKeys from "../consts/SoundKeys";
 
 export default class Preloader extends Phaser.Scene {
 
@@ -22,6 +23,14 @@ export default class Preloader extends Phaser.Scene {
             'assets/rocket-mouse.png',
             'assets/rocket-mouse.json'
         )
+        /* Estuve una semana buscando el error porque no me lei este archivo en el deplo
+        Lo que paso fue por CaseSensitive, que estaba el nombre del json con Mayus y aqui lo llamaba con minus
+        , Funcionaba localmente pero al hacer el deploy no 
+        Aprendi:
+        Ser mas detallista al hacer importaciones
+        Lo Genial que es Vite
+        Hacer casos a los warnings de la consola del navegador
+        Siempre el error va por ese lado  */
 
         /* Cargaremos decoracion */
         this.load.image(
@@ -59,6 +68,26 @@ export default class Preloader extends Phaser.Scene {
         this.load.image(
             TextureKeys.Coin,
             'assets/object_coin.png'
+        )
+        /* Cargaremos los sonidos */
+        this.load.audio(
+            SoundKeys.CoinSound,
+            'assets/sfx/handleCoins.ogg'
+        )
+
+        this.load.audio(
+            SoundKeys.Explosion,
+            'assets/sfx/explosionCrunch_002.ogg'
+        )
+
+        this.load.audio(
+            SoundKeys.Fire,
+            'assets/sfx/thrusterFire_000.ogg'
+        )
+
+        this.load.audio(
+            SoundKeys.Steps,
+            'assets/sfx/footstep06.ogg'
         )
 
     }
@@ -122,7 +151,7 @@ export default class Preloader extends Phaser.Scene {
                 
         })
         /* cuando el preaload este cargado entrara en:  */
-        this.scene.start(SceneKeys.Game)
+        this.scene.start(SceneKeys.GameStart )
     }
 
 }

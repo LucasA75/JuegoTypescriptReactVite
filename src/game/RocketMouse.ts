@@ -1,8 +1,8 @@
 /* GameObject no tiene children pero tenemos container para esto */
-import Phaser from "phaser";
 import TextureKeys from "../consts/TextureKeys";
 import AnimationKeys from "../consts/AnimationKeys";
 import SceneKeys from "../consts/SceneKeys";
+import SoundKeys from "../consts/SoundKeys";
 
 
 /* vamos a crear un enum con los diferentes states que puede tener el raton */
@@ -25,7 +25,6 @@ export default class RocketMouse extends Phaser.GameObjects.Container {
 
     //Haremos la clase del cursor -> para pulsar teclas
     private cursors: Phaser.Types.Input.Keyboard.CursorKeys // este metodo  es muy util para leer el teclado
-
 
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
@@ -80,6 +79,7 @@ export default class RocketMouse extends Phaser.GameObjects.Container {
         this.mouseState = MouseState.Killed
 
         this.mouse.play(AnimationKeys.RocketMouseDead)
+        this.mouse.scene.sound.play(SoundKeys.Explosion,{volume:0.5}) 
 
         const body = this.body as Phaser.Physics.Arcade.Body
         body.setAccelerationY(0)
@@ -99,22 +99,28 @@ export default class RocketMouse extends Phaser.GameObjects.Container {
                     //Check si la barra spaciadora esta presionada
                     if (this.cursors.space?.isDown) {
                         //seteamos el salto
-                        body.setAccelerationY(-600)
+                        body.setAccelerationY(-700)
                         this.enableJetpack(true)
 
                         //play la animacion de vuelo
                         this.mouse.play(AnimationKeys.RocketMouseFly, true)
+                        
+                        //reproducimos el sonido
+                        this.scene.sound.play(SoundKeys.Fire,{volume:0.1})
                     }
                     else {
                         //apagamos el jetpack si la tecla no esta apretada
                         body.setAccelerationY(0)
                         this.enableJetpack(false)
+                        this.scene.sound.stopByKey(SoundKeys.Fire)
                     }
 
                     //Ckequeamos si toco el suelo el player
                     if (body.blocked.down) {
                         //Corremos la animacion de caminar
                         this.mouse.play(AnimationKeys.RocketMouseRun, true)
+                        /* this.scene.sound.play(SoundKeys.Steps) */
+                        
                     }
                     else if (body.velocity.y > 0) {
                         //Reproducimos la animacion de caida si no esta subiendo
@@ -127,6 +133,8 @@ export default class RocketMouse extends Phaser.GameObjects.Container {
                     {
                         //reduce la velocidad un 99%
                         body.velocity.x *= 0.99
+
+                        this.scene.sound.stopByKey(SoundKeys.Fire)
 
                         //una vez menos que 5 podemos decir -> Goodbye mouse
                         if(body.velocity.x <= 5)
@@ -149,8 +157,7 @@ export default class RocketMouse extends Phaser.GameObjects.Container {
 
     enableJetpack(enabled: boolean) {
         this.flames.setVisible(enabled)
+        
     }
     /* Le agregaremos fisicas al container enves de al sprite */
-
-   
 }
